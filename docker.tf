@@ -1,5 +1,5 @@
 resource "aws_instance" "this" {
-  ami                    = "ami-09c813fb71547fc4f" # This is our devops-practice AMI ID
+  ami                    = "ami-0c02fb55956c7d316" # This is our devops-practice AMI ID
   vpc_security_group_ids = [aws_security_group.allow_all_docker.id]
   instance_type          = "t3.micro"
 
@@ -13,7 +13,7 @@ resource "aws_instance" "this" {
     Name    = "docker"
   }
 }
-
+# Create the  Security group for this Instance 
 resource "aws_security_group" "allow_all_docker" {
   name        = "allow_all_docker"
   description = "Allow TLS inbound traffic and all outbound traffic"
