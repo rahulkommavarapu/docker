@@ -1,19 +1,20 @@
 resource "aws_instance" "this" {
-  ami                    = "ami-0c02fb55956c7d316" # This is our devops-practice AMI ID
+  ami                    = "ami-0220d79f3f480ecf5" # This is our devops-practice AMI ID
   vpc_security_group_ids = [aws_security_group.allow_all_docker.id]
   instance_type          = "t3.micro"
+  key_name               = "Daws-82" # 🔥 REQUIRED for SSH
 
   # 20GB is not enough
   root_block_device {
-    volume_size = 50  # Set root volume size to 50GB
-    volume_type = "gp3"  # Use gp3 for better performance (optional)
+    volume_size = 50    # Set root volume size to 50GB
+    volume_type = "gp3" # Use gp3 for better performance (optional)
   }
   user_data = file("docker.sh")
   tags = {
-    Name    = "docker"
+    Name = "docker"
   }
 }
-# Create the  Security group for this Instance 
+
 resource "aws_security_group" "allow_all_docker" {
   name        = "allow_all_docker"
   description = "Allow TLS inbound traffic and all outbound traffic"
@@ -44,5 +45,5 @@ resource "aws_security_group" "allow_all_docker" {
   }
 }
 output "docker_ip" {
-  value       = aws_instance.this.public_ip
+  value = aws_instance.this.public_ip
 }
